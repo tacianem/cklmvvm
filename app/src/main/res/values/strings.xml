@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CklMVVM</string>
+    <string name="title_activity_article_details">ArticleDetailsActivity</string>
+</resources>
