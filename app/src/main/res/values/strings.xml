@@ -1,4 +1,22 @@
 <resources>
-    <string name="app_name">CklMVVM</string>
+    <string name="app_name">Ckl Articles</string>
     <string name="title_activity_article_details">ArticleDetailsActivity</string>
+
+    <string name="empty_list">No articles found.</string>
+    <string name="no_connection">No Internet connection!</string>
+
+    <string name="sort">Sort</string>
+    <string name="sort_author">Author</string>
+    <string name="sort_title">Title</string>
+    <string name="sort_date">Date</string>
+    <string name="sort_website">Website</string>
+    <string name="sort_tag">Article Tag</string>
+    <string name="sort_contents">Article Contents</string>
+
+    <string name="author">Author</string>
+    <string name="title">Article title</string>
+    <string name="date">MM/dd/yyyy</string>
+    <string name="tag">TAG, SUCH AS SPORTS</string>
+    <string name="website">Website</string>
+    <string name="contents">Contents: Blablablablablablablablablablablablablablablabla</string>
 </resources>

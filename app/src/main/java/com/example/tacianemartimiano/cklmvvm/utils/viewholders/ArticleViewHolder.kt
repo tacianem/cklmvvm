@@ -1,18 +1,20 @@
 package com.example.tacianemartimiano.cklmvvm.utils.viewholders
 
-import android.nfc.Tag
-import android.widget.ImageView
+import android.content.Context
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.utils.glide.GlideApp
+import kotlinx.android.synthetic.main.article_list_item.view.*
 
+class ArticleViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView) {
 
-class ViewHolder {
-
-    var categoryImage: ImageView? = null
-    var title: String = ""
-    var website: String = ""
-    var author: String = ""
-    var date: String = ""
-    var contents: String = ""
-    var tags: List<Tag> = listOf()
-    var imageUrl: String = ""
-
+    fun bindArticle(article: Article, context: Context) {
+        GlideApp.with(context)
+                .load(article.imageUrl)
+                .into(itemView.image)
+        itemView.title.text = article.title
+        itemView.author.text = article.author
+        itemView.date.text = article.date
+    }
 }

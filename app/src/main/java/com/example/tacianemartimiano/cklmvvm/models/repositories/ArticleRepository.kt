@@ -2,10 +2,10 @@ package com.example.tacianemartimiano.cklmvvm.model.repositories
 
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
-import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
+//import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 
-class ArticleRepository(private val articleDao: ArticleDao) {
+/*class ArticleRepository(private val articleDao: ArticleDao) {
 
     fun getArticleByTitle(id: Int): LiveData<Article> {
         return articleDao.getArticleById(id)
@@ -53,4 +53,4 @@ class ArticleRepository(private val articleDao: ArticleDao) {
             return null
         }
     }
-}
+}*/

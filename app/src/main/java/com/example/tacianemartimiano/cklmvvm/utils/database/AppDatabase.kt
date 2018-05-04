@@ -1,8 +1,6 @@
-package com.example.tacianemartimiano.cklmvvm.utils
+package com.example.tacianemartimiano.cklmvvm.utils.database
 
-import android.content.Context
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-
+/*
 @Database(entities = [Article::class], version = 1)
 @TypeConverters(ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -13,8 +11,10 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+                INSTANCE
+                        ?: synchronized(this) {
+                    INSTANCE
+                            ?: buildDatabase(context).also { INSTANCE = it }
                 }
 
         private fun buildDatabase(context: Context) =
@@ -22,4 +22,4 @@ abstract class AppDatabase : RoomDatabase() {
                         .build()
     }
 
-}
+}*/

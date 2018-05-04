@@ -1,9 +1,6 @@
 package com.example.tacianemartimiano.cklmvvm.model.dao
 
-import android.arch.lifecycle.LiveData
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import java.nio.charset.CodingErrorAction.REPLACE
-
+/*
 @Dao
 interface ArticleDao {
 
@@ -21,4 +18,4 @@ interface ArticleDao {
 
     @Delete
     fun deleteArticle(article: Article)
-}
+}*/

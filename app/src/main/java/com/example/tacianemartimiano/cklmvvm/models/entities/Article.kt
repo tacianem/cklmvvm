@@ -1,11 +1,9 @@
 package com.example.tacianemartimiano.cklmvvm.model.entities
 
-import android.nfc.Tag
-
-@Entity
+//@Entity
 class Article {
 
-    @PrimaryKey (autoGenerate = true)
+    //@PrimaryKey (autoGenerate = true)
     var id: Int? = null
 
     var title: String = ""
