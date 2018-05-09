@@ -1,56 +1,34 @@
 package com.example.tacianemartimiano.cklmvvm.model.repositories
-
+/*
 import android.arch.lifecycle.LiveData
-import android.os.AsyncTask
-//import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
+import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 
-/*class ArticleRepository(private val articleDao: ArticleDao) {
+class ArticleRepository(private val articleDao: ArticleDao) {
 
-    fun getArticleByTitle(id: Int): LiveData<Article> {
-        return articleDao.getArticleById(id)
+    fun allArticles(): LiveData<List<Article>> {
+        return articleDao.allArticles()
     }
 
-    fun insertArticles(article: Article) {
-        insertAsyncTask(articleDao).execute(article)
-    }
-
-    fun updateArticle(article: Article) {
-        updateAsyncTask(articleDao).execute(article)
-    }
-
-    fun deleteArticle(article: Article) {
-        deleteAsyncTask(articleDao).execute(article)
-    }
-
-    fun getAllArticles(): LiveData<List<Article>> {
-        return articleDao.allArticles
-    }
-
-    //insert into database
-    private class insertAsyncTask internal constructor(private val articleDao: ArticleDao) : AsyncTask<Article, Void, Void>() {
-
-        override fun doInBackground(vararg params: Article): Void? {
-            articleDao.insertArticle(params[0])
-            return null
+    fun getArticleByIDFromDatabase(id: Long, onSuccess: (Article?) -> Unit, onFailure: (String) -> Unit) {
+        launch {
+            async {
+                val article = articleDao.getArticleByID(id)
+                onSuccess(article)
+            }
         }
     }
 
-    //Update entity in database
-    private class updateAsyncTask internal constructor(private val articleDao: ArticleDao) : AsyncTask<Article, Void, Void>() {
-
-        override fun doInBackground(vararg params: Article): Void? {
-            articleDao.updateArticle(params[0])
-            return null
+    private fun insertArticleInDatabase(article: Article): Boolean {
+        try {
+            articleDao.insertArticle(article)
+        } catch (e: Exception) {
+            println(e.message)
+            return false
         }
+        return true
     }
 
-    //Delete from database
-    private class deleteAsyncTask internal constructor(private val articleDao: ArticleDao) : AsyncTask<Article, Void, Void>() {
-
-        override fun doInBackground(vararg params: Article): Void? {
-            articleDao.deleteArticle(params[0])
-            return null
-        }
-    }
 }*/

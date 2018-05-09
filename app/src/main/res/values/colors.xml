@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="tech">#B388FF</color>
+    <color name="sports">#B9F6CA</color>
+    <color name="politics">#EF9A9A</color>
+    <color name="science">#82B1FF</color>
 </resources>

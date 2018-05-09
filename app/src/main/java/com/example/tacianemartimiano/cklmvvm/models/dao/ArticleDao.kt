@@ -1,21 +1,29 @@
 package com.example.tacianemartimiano.cklmvvm.model.dao
 
-/*
+import android.arch.persistence.room.*
+import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.models.entities.ArticleTags
+
 @Dao
 interface ArticleDao {
 
-    @get:Query("select * from article")
-    val getAllArticles: LiveData<List<Article>>
+    @Query("SELECT * FROM article WHERE id = :id")
+    fun getArticleByID(id: Long): Article
 
-    @Query("select * from article where id = :id")
-    fun getArticleById(id: Int): LiveData<Article>
+//    @Query("SELECT * FROM article")
+//    fun allArticles(): LiveData<List<Article>>
 
-    @Insert(onConflict = REPLACE)
-    fun insertArticles(vararg articles: Article)
+    @Transaction
+    @Query("SELECT * FROM article")
+    fun allArticles(): List<ArticleTags>
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateArticle(article: Article)
+
+    @Insert
+    fun insertArticle(vararg profiles: Article)
 
     @Delete
     fun deleteArticle(article: Article)
-}*/
+ 
+}

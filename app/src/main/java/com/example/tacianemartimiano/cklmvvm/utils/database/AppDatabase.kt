@@ -1,11 +1,12 @@
 package com.example.tacianemartimiano.cklmvvm.utils.database
 
-/*
-@Database(entities = [Article::class], version = 1)
-@TypeConverters(ListConverter::class)
+/*@Database(entities = [Article::class, Tag::class], version = 1)
+@TypeConverters(TagListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun articleDao(): Article
+    abstract fun articleDao(): ArticleDao
+
+    abstract fun tagDao(): TagDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

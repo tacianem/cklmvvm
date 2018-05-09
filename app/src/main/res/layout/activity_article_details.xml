@@ -1,31 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.article_details.ArticleDetailsActivity">
+    android:padding="16dp">
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    </android.support.design.widget.AppBarLayout>
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/tech"
+                android:fontFamily="@font/cinzel"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:text="@string/tag" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:gravity="right"
+                android:textSize="14sp"
+                tools:text="@string/date" />
 
-</android.support.design.widget.CoordinatorLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/fira_sans_extra_condensed_bold_italic"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="26sp"
+            tools:text="@string/title" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="@string/author" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textSize="14sp"
+            tools:text="@string/website" />
+
+
+        <TextView
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:fontFamily="@font/frank_ruhl_libre"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            tools:text="@string/contents" />
+
+
+    </LinearLayout>
+
+
+</ScrollView>
+

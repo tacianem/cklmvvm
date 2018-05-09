@@ -9,6 +9,12 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
+    kotlin {
+        experimental {
+            coroutines 'enable'
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.tacianemartimiano.cklmvvm"
         minSdkVersion 15
@@ -47,4 +53,9 @@ dependencies {
 
     implementation "android.arch.persistence.room:runtime:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
+
+    implementation "org.parceler:parceler-api:1.1.6"
+    kapt "org.parceler:parceler:1.1.6"
 }

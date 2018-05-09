@@ -6,29 +6,30 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.tacianemartimiano.cklmvvm.R
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
 
-class ArticleRecycleAdapter(val context: Context, val articles: List<Article>): RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleRecycleAdapter(val context: Context, val listener: ArticleListener?): RecyclerView.Adapter<ArticleViewHolder>() {
 
-    var articlesList = articles //TODO I dont see how to use this
-    set(value) {
-        field  = value
-        notifyDataSetChanged()
-    }
+    var articlesList = listOf<Article>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bindArticle(articles[position], context)
+        holder.article = articlesList[position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(context)
                 .inflate(R.layout.article_list_item, parent, false)
-        return ArticleViewHolder(view)
+        return ArticleViewHolder(view, context, listener)
     }
 
     override fun getItemCount(): Int {
-        return articles.count()
+        return articlesList.count()
     }
 
 }
