@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 @Entity
 class Tag {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 
     var label: String = ""
     var color: Int = 0

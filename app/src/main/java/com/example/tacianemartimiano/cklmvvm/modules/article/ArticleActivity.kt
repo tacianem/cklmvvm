@@ -26,13 +26,12 @@ class ArticleActivity: BaseActivity(), ArticleListener {
         setupView()
         registerObservers()
 
-        //RETROFIT
-        //realm (ou room)
+        //RETROFIT + room
     }
 
     private fun setupView() {
         viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
-
+//-------------------
         val tag = Tag()
         tag.label = "CKL"
 
@@ -42,28 +41,33 @@ class ArticleActivity: BaseActivity(), ArticleListener {
         article.date = "date"
         article.contents = "contents"
         article.website = "website"
-        //article.tags = listOf(tag)
+        article.tags = listOf(tag)
         article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
 
         articles = listOf(article, article, article, article, article, article, article, article, article, article)
+//--------------------
 
         adapter = ArticleRecycleAdapter(this, this)
         articlesRecyclerView.adapter = adapter
+
+    //--------
         adapter?.articlesList = articles
+    //--------
 
         val layoutManager = LinearLayoutManager(this)
         articlesRecyclerView.layoutManager = layoutManager
 
-    }
+        viewModel?.fetchArticlesFromAPI(articles)
+        }
 
-    override fun onArticleClicked(article: Article?) { //TODO PASSAR PRO VM
+    override fun onArticleClicked(article: Article?) {
         viewModel?.onArticleClicked(this, article)
     }
 
     private fun registerObservers() {
         viewModel?.articles?.observe(this, Observer {
-            //TODO: LISTAR ARTIGOS
             //adapter?.articlesList = articles
+            //adapter?.notifyDataSetChanged()
         })
     }
 

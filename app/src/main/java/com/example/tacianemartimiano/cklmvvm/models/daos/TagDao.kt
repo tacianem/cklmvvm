@@ -1,4 +1,4 @@
-package com.example.tacianemartimiano.cklmvvm.models.dao
+package com.example.tacianemartimiano.cklmvvm.models.daos
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
