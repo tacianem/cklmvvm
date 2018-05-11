@@ -3,7 +3,6 @@ package com.example.tacianemartimiano.cklmvvm.model.repositories
 import android.arch.lifecycle.LiveData
 import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.models.entities.ArticleTag
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
@@ -28,7 +27,7 @@ class ArticleRepository(private val articleDao: ArticleDao) {
     }
 
     //Database
-    fun allArticles(): LiveData<List<ArticleTag>> {
+    fun allArticles(): LiveData<List<Article.ArticleTag>> {
         return articleDao.allArticles()
     }
 

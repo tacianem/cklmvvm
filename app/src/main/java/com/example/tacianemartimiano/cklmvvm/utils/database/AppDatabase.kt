@@ -9,7 +9,7 @@ import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
 import com.example.tacianemartimiano.cklmvvm.models.daos.TagDao
 
-@Database(entities = [Article::class, Tag::class], version = 1)
+@Database(entities = [Article::class, Tag::class, Article.ArticleTag::class], version = 1)
 //@TypeConverters(ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
