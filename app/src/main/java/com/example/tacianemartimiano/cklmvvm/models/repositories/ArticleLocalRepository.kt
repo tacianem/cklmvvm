@@ -6,27 +6,8 @@ import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
-class ArticleRepository(private val articleDao: ArticleDao) {
+class ArticleLocalRepository(private val articleDao: ArticleDao) {
 
-    fun syncArticles() {
-        launch {
-            async {
-                fetchArticlesFromAPI() //TODO IF THEY ARE NOT ALREADY IN ROOM!!!
-            }
-        }
-    }
-
-    //Api
-    private fun fetchArticlesFromAPI(){
-//        val api = RetrofitHelper.getRetrofit(true)?.create(CKLArticlesService::class.java)
-//        api?.getArticles()?.execute()?.body()?.let { articles ->
-//            articles.forEach {
-//                insertArticleInDatabase(it)
-//            }
-//        }
-    }
-
-    //Database
     fun allArticles(): LiveData<List<Article.ArticleTag>> {
         return articleDao.allArticles()
     }
