@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
 import com.example.tacianemartimiano.cklmvvm.modules.article.ArticleViewModel
 import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
 import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleRecycleAdapter
@@ -25,39 +24,31 @@ class ArticleActivity: BaseActivity(), ArticleListener {
 
         setupView()
         registerObservers()
-
-        //RETROFIT + room
     }
 
     private fun setupView() {
         viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
-//-------------------
-        val tag = Tag()
-        tag.label = "CKL"
-
-        val article = Article()
-        article.title = "title"
-        article.author = "author"
-        article.date = "date"
-        article.contents = "contents"
-        article.website = "website"
-        article.tags = listOf(tag)
-        article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
-
-        articles = listOf(article, article, article, article, article, article, article, article, article, article)
-//--------------------
-
         adapter = ArticleRecycleAdapter(this, this)
         articlesRecyclerView.adapter = adapter
 
-    //--------
-        adapter?.articlesList = articles
-    //--------
+//        val tag = Tag()
+//        tag.label = "CKL"
+//
+//        val article = Article()
+//        article.title = "title"
+//        article.author = "author"
+//        article.date = "date"
+//        article.contents = "contents"
+//        article.website = "website"
+//        article.tags = listOf(tag)
+//        article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
+//
+//        articles = listOf(article, article, article, article, article, article, article, article, article, article)
+//        adapter?.articlesList = articles
+
 
         val layoutManager = LinearLayoutManager(this)
         articlesRecyclerView.layoutManager = layoutManager
-
-        viewModel?.fetchArticlesFromAPI(articles)
         }
 
     override fun onArticleClicked(article: Article?) {
@@ -66,8 +57,8 @@ class ArticleActivity: BaseActivity(), ArticleListener {
 
     private fun registerObservers() {
         viewModel?.articles?.observe(this, Observer {
-            //adapter?.articlesList = articles
-            //adapter?.notifyDataSetChanged()
+            adapter?.articlesList = articles
+            adapter?.notifyDataSetChanged()
         })
     }
 
