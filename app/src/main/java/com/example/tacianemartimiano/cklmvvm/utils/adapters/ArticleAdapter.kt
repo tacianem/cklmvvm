@@ -9,17 +9,16 @@ import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
+class ArticleAdapter(val context: Context, val listener: ArticleListener): RecyclerView.Adapter<ArticleViewHolder>() {
 
-class ArticleRecycleAdapter(val context: Context, val listener: ArticleListener?): RecyclerView.Adapter<ArticleViewHolder>() {
-
-    var articlesList = listOf<Article>()
+    var articlesList = mutableListOf<Article>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.article = articlesList[position]
+        holder.bind(articlesList[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
