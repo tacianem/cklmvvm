@@ -1,6 +1,7 @@
-package com.example.tacianemartimiano.cklmvvm.model.entities
+package com.example.tacianemartimiano.cklmvvm.models
 
 import android.arch.persistence.room.*
+import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
 
 @Entity(tableName = "articles")
 class Article {
@@ -28,7 +29,7 @@ class Article {
             foreignKeys = [(ForeignKey(entity = Article::class, parentColumns = ["article_id"], childColumns = ["art_id"])),
                 (ForeignKey(entity = Tag::class, parentColumns = ["tag_id"], childColumns = ["art_tag_id"]))])
 
-    abstract class ArticleTag {
+    class ArticleTag {
         @ColumnInfo(name = "art_id")
         var artId: Long = 0
         @ColumnInfo(name = "art_tag_id")

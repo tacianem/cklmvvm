@@ -1,11 +1,10 @@
 package com.example.tacianemartimiano.cklmvvm
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
+import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.modules.article.ArticleViewModel
 import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
 import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleAdapter
@@ -62,19 +61,21 @@ class ArticleActivity: BaseActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         articlesRecyclerView.layoutManager = layoutManager
+
+        viewModel?.fetchArticles(articlesList)
     }
 
     private fun fetchArticles() {
-        viewModel?.fetchArticles()
+        //viewModel?.fetchArticles()
     }
 
     private fun registerObservers() {
-        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
-            articles?.let {
-                adapter?.articlesList = it
-                adapter?.notifyDataSetChanged()
-            }
-        })
+//        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
+//            articles?.let {
+//                adapter?.articlesList = it
+//                adapter?.notifyDataSetChanged()
+//            }
+//        })
     }
 
     //endregion

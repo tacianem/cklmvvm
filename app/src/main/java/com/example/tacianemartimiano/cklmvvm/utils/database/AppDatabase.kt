@@ -20,7 +20,7 @@ abstract class AppDatabase: RoomDatabase() {
     companion object {
         private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase =
+        fun getInstance(context: Context): AppDatabase =
                 INSTANCE
                         ?: synchronized(this) {
                             INSTANCE

@@ -15,29 +15,29 @@ class ArticleDetailsActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_details)
 
-        showBackButton()
-
         setupView()
-
         registerObservers()
-        viewModel?.initWithExtras(intent.extras)
     }
 
     private fun setupView() {
+        showBackButton()
         viewModel = ViewModelProviders.of(this).get(ArticleDetailsViewModel::class.java)
+        viewModel?.initWithExtras(intent.extras)
     }
 
     private fun registerObservers() {
         viewModel?.article?.observe(this, Observer { article ->
-            article_title.text = article?.title
-            author.text = article?.author
-            date.text = article?.date
-            website.text = article?.website
-            contents.text = article?.contents
-            author.text = article?.author
-            //tag.text = article?.tags?.get(0)?.label
+            article?.let {
+                article_title.text = article.title
+                author.text = article.author
+                date.text = article.date
+                website.text = article.website
+                contents.text = article.contents
+                author.text = article.author
+                tag.text = article.tags?.get(0)?.label
 
-            article?.read = true
+                article.read = true
+            }
         })
     }
 

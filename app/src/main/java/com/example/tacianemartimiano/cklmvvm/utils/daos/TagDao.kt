@@ -1,5 +1,6 @@
 package com.example.tacianemartimiano.cklmvvm.utils.daos
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
 
@@ -7,17 +8,17 @@ import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
 interface TagDao {
 
     @Query("SELECT * FROM tags")
-    fun getAllTags(): MutableList<Tag>
+    fun allTags(): LiveData<MutableList<Tag>>
 
     @Query("SELECT * FROM tags WHERE tag_id = :id")
-    fun getTagById(id: Int): Tag
+    fun tagById(id: Int): LiveData<Tag>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTags(vararg tags: Tag)
+    fun insert(vararg tags: Tag)
 
     @Update
-    fun updateTag(tag: Tag)
+    fun update(tag: Tag)
 
     @Delete
-    fun deleteTag(tag: Tag)
+    fun delete(tag: Tag)
 }
