@@ -3,12 +3,12 @@ package com.example.tacianemartimiano.cklmvvm.utils.viewholders
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.glide.GlideApp
 import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import kotlinx.android.synthetic.main.article_list_item.view.*
 
-class ArticleViewHolder(itemView: View, val context: Context, val listener: ArticleListener): RecyclerView.ViewHolder(itemView) {
+class ArticleViewHolder(itemView: View, val context: Context, private val listener: ArticleListener): RecyclerView.ViewHolder(itemView) {
 
     var article: Article? = null
         set(value) {
@@ -18,7 +18,7 @@ class ArticleViewHolder(itemView: View, val context: Context, val listener: Arti
 
     fun bind(article: Article) {
         itemView.setOnClickListener {
-            listener?.onArticleClicked(article)
+            listener.onArticleClicked(article)
         }
     }
 

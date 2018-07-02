@@ -2,6 +2,7 @@ package com.example.tacianemartimiano.cklmvvm.modules.article
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.content.Intent
 import com.example.tacianemartimiano.cklmvvm.models.Article
@@ -11,17 +12,17 @@ import com.example.tacianemartimiano.cklmvvm.utils.repositories.ArticleRepositor
 
 class ArticleViewModel(application: Application): AndroidViewModel(application) {
 
-    //    var articlesListLiveData = MutableLiveData<MutableList<Article>>()
+    var articlesListLiveData :LiveData<List<Article>>? = null
     private var articleRepository: ArticleRepository = ArticleRepository(getApplication())
 
     fun onArticleClicked(context: Context, article: Article) {
         val detailsIntent = Intent(context, ArticleDetailsActivity::class.java)
-        detailsIntent.putExtra(EXTRA_ARTICLE, article?.articleId)
+        detailsIntent.putExtra(EXTRA_ARTICLE, article.articleId)
         context.startActivity(detailsIntent)
     }
 
-    fun fetchArticles(articlesList: MutableList<Article>) { //) {
-//        var articlesList = mutableListOf<Article>()
+    fun fetchArticles(articlesList: List<Article>) { //) {
+//        var articlesList = listOf<Article>()
 //        ArticlesApiRepositoy.fetchArticles() TODO
 //                ?.subscribeOn(Schedulers.io())
 //                ?.observeOn(AndroidSchedulers.mainThread())

@@ -11,7 +11,7 @@ interface TagDao {
     fun allTags(): LiveData<MutableList<Tag>>
 
     @Query("SELECT * FROM tags WHERE tag_id = :id")
-    fun tagById(id: Int): LiveData<Tag>
+    fun tagById(id: Long): LiveData<Tag>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg tags: Tag)

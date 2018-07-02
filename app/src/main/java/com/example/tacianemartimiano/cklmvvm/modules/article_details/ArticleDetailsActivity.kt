@@ -34,7 +34,7 @@ class ArticleDetailsActivity: BaseActivity() {
                 website.text = article.website
                 contents.text = article.contents
                 author.text = article.author
-                tag.text = article.tags?.get(0)?.label
+                tag.text = article.tags[0].label //treats only one tag at current time
 
                 article.read = true
             }

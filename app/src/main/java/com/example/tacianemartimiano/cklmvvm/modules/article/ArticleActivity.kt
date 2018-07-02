@@ -1,5 +1,6 @@
 package com.example.tacianemartimiano.cklmvvm
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +17,7 @@ class ArticleActivity: BaseActivity() {
     private var viewModel: ArticleViewModel? = null
     private var adapter: ArticleAdapter? = null
 
-    private lateinit var articlesList: MutableList<Article>
+    private lateinit var articlesList: List<Article>
 
     //region Lifecycle
 
@@ -26,7 +27,7 @@ class ArticleActivity: BaseActivity() {
 
         setupView()
         fetchArticles()
-        registerObservers()
+//        registerObservers()
     }
 
     //endregion
@@ -56,13 +57,14 @@ class ArticleActivity: BaseActivity() {
         article.tags = listOf(tag)
         article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
 
-        articlesList = mutableListOf(article, article, article, article, article, article, article, article, article, article)
+        articlesList = listOf(article, article, article, article, article, article, article, article, article, article)
+
+        viewModel?.fetchArticles(articlesList)
         adapter?.articlesList = articlesList
+        adapter?.notifyDataSetChanged()
 
         val layoutManager = LinearLayoutManager(this)
         articlesRecyclerView.layoutManager = layoutManager
-
-        viewModel?.fetchArticles(articlesList)
     }
 
     private fun fetchArticles() {
@@ -70,12 +72,12 @@ class ArticleActivity: BaseActivity() {
     }
 
     private fun registerObservers() {
-//        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
-//            articles?.let {
-//                adapter?.articlesList = it
-//                adapter?.notifyDataSetChanged()
-//            }
-//        })
+        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
+            articles?.let {
+                adapter?.articlesList = it
+                adapter?.notifyDataSetChanged()
+            }
+        })
     }
 
     //endregion

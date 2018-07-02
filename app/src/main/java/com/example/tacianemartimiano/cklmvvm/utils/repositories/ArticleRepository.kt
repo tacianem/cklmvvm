@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData
 import android.util.Log
 import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.models.Article
+import com.example.tacianemartimiano.cklmvvm.models.ArticleTag
 import com.example.tacianemartimiano.cklmvvm.utils.daos.ArticleTagDao
 import com.example.tacianemartimiano.cklmvvm.utils.daos.TagDao
 import com.example.tacianemartimiano.cklmvvm.utils.database.AppDatabase
@@ -20,20 +21,24 @@ class ArticleRepository(application: Application) {
 
     init {
         val database = AppDatabase.getInstance(application)
-        articleDao = database?.articleDao()
-        articleTagDao = database?.articleTagDao()
-        tagDao = database?.tagDao()
-        articlesList = articleDao?.allArticles()
+        articleDao = database.articleDao()
+        articleTagDao = database.articleTagDao()
+        tagDao = database.tagDao()
+        articlesList = articleDao.allArticles()
+    }
+
+    fun getArticle(articleId: Long): LiveData<Article> {
+        return articleDao.articleByID(articleId)
     }
 
     fun insertArticle(article: Article, onSuccess: (() -> Unit)? = null) {
         launch {
             async {
                 try {
-                    articleDao?.insert(article)
+                    articleDao.insert(article)
                     for (tag in article.tags) {
                         tagDao.insert(tag)
-                        val articleTag = Article.ArticleTag()
+                        val articleTag = ArticleTag()
                         articleTag.artId = article.articleId
                         articleTag.artTagId = tag.tagId
                         Log.d("Art ID from repository", articleTag.artId.toString())
