@@ -10,7 +10,7 @@ import com.example.tacianemartimiano.cklmvvm.models.Article
 interface ArticleDao {
 
     @Query("SELECT * FROM articles WHERE article_id = :id")
-    fun articleByID(id: Long): LiveData<Article>
+    fun articleByID(id: Int?): Article
 
     @Query("SELECT * FROM articles")
     fun allArticles(): LiveData<MutableList<Article>>

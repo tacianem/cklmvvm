@@ -9,7 +9,7 @@ import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
-class ArticleAdapter(val context: Context, private val listener: ArticleListener): RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleAdapter(val context: Context, private val listener: ArticleListener) : RecyclerView.Adapter<ArticleViewHolder>() {
 
     var articlesList = listOf<Article>()
         set(value) {
