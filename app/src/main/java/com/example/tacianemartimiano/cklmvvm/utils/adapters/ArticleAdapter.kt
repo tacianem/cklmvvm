@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.tacianemartimiano.cklmvvm.R
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
-class ArticleAdapter(val context: Context, val listener: ArticleListener): RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleAdapter(val context: Context, private val listener: ArticleListener) : RecyclerView.Adapter<ArticleViewHolder>() {
 
-    var articlesList = mutableListOf<Article>()
+    var articlesList = listOf<Article>()
         set(value) {
             field = value
             notifyDataSetChanged()
