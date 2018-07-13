@@ -4,61 +4,84 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
+import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.modules.article.ArticleViewModel
 import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
-import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleRecycleAdapter
-import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
+import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleAdapter
 import kotlinx.android.synthetic.main.activity_article.*
 
+class ArticleActivity : BaseActivity() {
 
-class ArticleActivity: BaseActivity(), ArticleListener {
-
-    private var adapter: ArticleRecycleAdapter? = null
     private var viewModel: ArticleViewModel? = null
-    private var articles: List<Article> = listOf()
+    private var adapter: ArticleAdapter? = null
+
+    private lateinit var articlesList: MutableList<Article>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        setupView()
         registerObservers()
+        setupView()
+        fetchArticles()
     }
 
     private fun setupView() {
         viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
-        adapter = ArticleRecycleAdapter(this, this)
-        articlesRecyclerView.adapter = adapter
 
-//        val tag = Tag()
-//        tag.label = "CKL"
-//
-//        val article = Article()
-//        article.title = "title"
-//        article.author = "author"
-//        article.date = "date"
-//        article.contents = "contents"
-//        article.website = "website"
-//        article.tags = listOf(tag)
-//        article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
-//
-//        articles = listOf(article, article, article, article, article, article, article, article, article, article)
-//        adapter?.articlesList = articles
+//        adapter = ArticleAdapter(this, object : ArticleListener {
+//            override fun onArticleClicked(article: Article) {
+//                viewModel?.onArticleClicked(this@ArticleActivity, article)
+//            }
+//        })
 
+        adapter = ArticleAdapter(this) { viewModel?.onArticleClicked(this@ArticleActivity, it) }
+
+        //TODO REMOVE MOCK
+
+        val article = Article()//0)
+        with(article) {
+            articleId = 2
+            title = "title"
+            author = "author"
+            date = "date"
+            contents = "contents"
+            website = "website"
+            tag = "CKL"
+            imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
+        }
+
+        val article2 = Article()//1)
+        with(article2) {
+            articleId = 1
+            title = "tit2le2"
+            author = "au2thor2"
+            date = "d2a2te"
+            contents = "con2te2nts"
+            website = "webs2it2e"
+            tag = "CKL"
+            imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
+        }
+
+        articlesList = mutableListOf(article, article2)
 
         val layoutManager = LinearLayoutManager(this)
         articlesRecyclerView.layoutManager = layoutManager
-        }
+        articlesRecyclerView.adapter = adapter
 
-    override fun onArticleClicked(article: Article?) {
-        viewModel?.onArticleClicked(this, article)
+        viewModel?.fetchArticles(articlesList) //adapter list ir the return of fetch articles TODO
+        adapter?.articlesList = articlesList
+    }
+
+    private fun fetchArticles() {
+        //viewModel?.fetchArticles()
     }
 
     private fun registerObservers() {
-        viewModel?.articles?.observe(this, Observer {
-            adapter?.articlesList = articles
-            adapter?.notifyDataSetChanged()
+        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
+            articles?.let {
+                adapter?.articlesList = it
+            }
         })
     }
 

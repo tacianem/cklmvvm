@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Ckl Articles</string>
     <string name="title_activity_article_details">ArticleDetailsActivity</string>
+    <string name="image_description">Article image</string>
 
     <string name="empty_list">No articles found.</string>
     <string name="no_connection">No Internet connection!</string>
@@ -16,7 +17,9 @@
     <string name="author">Author</string>
     <string name="title">Article title</string>
     <string name="date">MM/dd/yyyy</string>
-    <string name="tag">TAG, SUCH AS SPORTS</string>
+    <string name="tag">TAG, SUCH AS TECH</string>
     <string name="website">Website</string>
     <string name="contents">Contents: Blablablablablablablablablablablablablablablabla</string>
+
+    <string name="database_error">Error while saving to local database</string>
 </resources>

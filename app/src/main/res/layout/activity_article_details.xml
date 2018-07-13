@@ -1,61 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/tech"
+            android:fontFamily="@font/cinzel"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:text="@string/tag" />
 
-            <TextView
-                android:id="@+id/tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/tech"
-                android:fontFamily="@font/cinzel"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:text="@string/tag" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="100dp"
+            android:gravity="end"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/article_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tag"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/date" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:gravity="right"
-                android:textSize="14sp"
-                tools:text="@string/date" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/article_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/fira_sans_extra_condensed_bold_italic"
             android:gravity="center"
             android:padding="16dp"
             android:textColor="@android:color/black"
             android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tag"
             tools:text="@string/title" />
 
         <TextView
             android:id="@+id/author"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:maxLines="2"
@@ -63,45 +70,61 @@
             android:textAllCaps="true"
             android:textColor="@android:color/black"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/article_title"
             tools:text="@string/author" />
 
         <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
+            android:id="@+id/article_image"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:adjustViewBounds="true"
-            android:layout_gravity="center"
+            android:contentDescription="@string/image_description"
             android:padding="16dp"
-            android:scaleType="centerInside"
+            android:scaleType="center"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/author"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/website"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
             android:maxLines="1"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/article_image"
             tools:text="@string/website" />
-
 
         <TextView
             android:id="@+id/contents"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/frank_ruhl_libre"
             android:gravity="center_horizontal"
             android:padding="16dp"
             android:textColor="@android:color/black"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/website"
             tools:text="@string/contents" />
 
-
-    </LinearLayout>
-
+    </android.support.constraint.ConstraintLayout>
 
 </ScrollView>
 

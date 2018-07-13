@@ -1,3 +1,3 @@
 package com.example.tacianemartimiano.cklmvvm.utils.constants
 
-const val JSON_URL = "https://cheesecakelabs.com"
+const val BASE_URL = "https://cheesecakelabs.com/"
