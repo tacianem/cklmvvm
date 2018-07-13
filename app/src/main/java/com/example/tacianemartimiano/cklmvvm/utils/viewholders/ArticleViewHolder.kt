@@ -8,13 +8,7 @@ import com.example.tacianemartimiano.cklmvvm.utils.glide.GlideApp
 import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import kotlinx.android.synthetic.main.article_list_item.view.*
 
-class ArticleViewHolder(itemView: View?, val context: Context, listener: ArticleListener?): RecyclerView.ViewHolder(itemView) {
-
-    init {
-        itemView?.setOnClickListener {
-            listener?.onArticleClicked(article)
-        }
-    }
+class ArticleViewHolder(itemView: View, val context: Context, val listener: ArticleListener): RecyclerView.ViewHolder(itemView) {
 
     var article: Article? = null
         set(value) {
@@ -22,7 +16,13 @@ class ArticleViewHolder(itemView: View?, val context: Context, listener: Article
             setupView()
         }
 
-    fun setupView() {
+    fun bind(article: Article) {
+        itemView.setOnClickListener {
+            listener?.onArticleClicked(article)
+        }
+    }
+
+    private fun setupView() {
         article?.let {
             GlideApp.with(context)
                     .load(it.imageUrl)

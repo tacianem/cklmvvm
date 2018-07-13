@@ -10,11 +10,9 @@ import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_ARTICLE
 class ArticleDetailsViewModel(application: Application): AndroidViewModel(application) {
 
     var article = MutableLiveData<Article>()
-
-    fun initWithExtras(extras: Bundle?){
-        article.value = extras?.getParcelable(EXTRA_ARTICLE)
+    
+    fun initWithExtras(extras: Bundle?) {
+        val articleId = extras?.getLong(EXTRA_ARTICLE)
     }
-
-
 
 }

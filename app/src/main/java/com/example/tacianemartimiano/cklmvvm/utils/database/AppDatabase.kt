@@ -7,14 +7,14 @@ import android.content.Context
 import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
-import com.example.tacianemartimiano.cklmvvm.models.daos.TagDao
+import com.example.tacianemartimiano.cklmvvm.utils.daos.ArticleTagDao
+import com.example.tacianemartimiano.cklmvvm.utils.daos.TagDao
 
 @Database(entities = [Article::class, Tag::class, Article.ArticleTag::class], version = 1)
-//@TypeConverters(ListConverter::class)
-abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() {
 
+    abstract fun articleTagDao(): ArticleTagDao
     abstract fun articleDao(): ArticleDao
-
     abstract fun tagDao(): TagDao
 
     companion object {
@@ -23,9 +23,9 @@ abstract class AppDatabase : RoomDatabase() {
         fun getDatabase(context: Context): AppDatabase =
                 INSTANCE
                         ?: synchronized(this) {
-                    INSTANCE
-                            ?: buildDatabase(context).also { INSTANCE = it }
-                }
+                            INSTANCE
+                                    ?: buildDatabase(context).also { INSTANCE = it }
+                        }
 
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "ckl_articles_db")
