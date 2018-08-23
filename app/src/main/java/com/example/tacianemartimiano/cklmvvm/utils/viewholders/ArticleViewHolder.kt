@@ -8,13 +8,12 @@ import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.glide.GlideApp
 import kotlinx.android.synthetic.main.article_list_item.view.*
 
-class ArticleViewHolder(var view: View, private val context: Context, private val articleClick: (Article) -> Unit) : RecyclerView.ViewHolder(view) {
-//class ArticleViewHolder(var view: View, private val context: Context, private val listener: ArticleListener) : RecyclerView.ViewHolder(view) {
+class ArticleViewHolder(var view: View, private val context: Context, private val onArticleClicked: (Article) -> Unit) : RecyclerView.ViewHolder(view) {
 
     init {
         view.setOnClickListener {
             article?.let {
-                articleClick(it)
+                onArticleClicked(it)
             }
         }
     }

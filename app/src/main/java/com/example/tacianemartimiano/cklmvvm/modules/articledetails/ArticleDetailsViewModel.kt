@@ -6,16 +6,15 @@ import android.arch.lifecycle.MutableLiveData
 import android.os.Bundle
 import android.util.Log
 import com.example.tacianemartimiano.cklmvvm.models.Article
-import com.example.tacianemartimiano.cklmvvm.utils.constants.ERROR_DETAILS
+import com.example.tacianemartimiano.cklmvvm.utils.constants.ARTICLE_DETAILS_ERROR
 import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_ARTICLE
 import com.example.tacianemartimiano.cklmvvm.utils.repositories.local.ArticleRepository
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
 class ArticleDetailsViewModel(application: Application) : AndroidViewModel(application) {
 
     var articleLiveData: MutableLiveData<Article> = MutableLiveData()
-    private var articlesRepository: ArticleRepository = ArticleRepository(getApplication())
+    private var articlesRepository: ArticleRepository = ArticleRepository(application)
 
     fun initWithExtras(extras: Bundle?) {
         getArticle(extras?.getInt(EXTRA_ARTICLE))
@@ -23,17 +22,14 @@ class ArticleDetailsViewModel(application: Application) : AndroidViewModel(appli
 
     private fun getArticle(articleId: Int?) {
         launch {
-            async {
-                try {
-
-                    articleId?.let { id ->
-                        val article = articlesRepository.getArticle(id)
-                        articleLiveData.postValue(article)
+            try {
+                articleId?.let { id ->
+                    articlesRepository.getArticleById(id) {
+                        articleLiveData.postValue(it)
                     }
-                } catch (e: Exception) {
-                    Log.e(ERROR_DETAILS, e.message)
-                    return@async
                 }
+            } catch (e: Exception) {
+                Log.e(ARTICLE_DETAILS_ERROR, e.message)
             }
         }
     }

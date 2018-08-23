@@ -3,42 +3,83 @@ package com.example.tacianemartimiano.cklmvvm.utils.repositories.local
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.util.Log
-import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.models.Article
-import com.example.tacianemartimiano.cklmvvm.utils.constants.ERROR_DATABASE
+import com.example.tacianemartimiano.cklmvvm.utils.constants.DATABASE_ERROR
+import com.example.tacianemartimiano.cklmvvm.utils.daos.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.utils.database.AppDatabase
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
 class ArticleRepository(application: Application) {
 
+    private val database = AppDatabase.getInstance(application)
     private val articleDao: ArticleDao
     private var articlesList: LiveData<MutableList<Article>>
 
     init {
-        val database = AppDatabase.getInstance(application)
         articleDao = database.articleDao()
         articlesList = articleDao.allArticles()
     }
 
-    fun insertArticle(article: Article) {
+    fun clearTables() {
         launch {
-            async {
-                try {
-                    val currentArticle: Article? = articleDao.articleByID(article.articleId)
-                    if (currentArticle == null) { //TODO ANNOTATION IN BD AND REMOVE IF ?!
-                        articleDao.insert(article)
-                    }
-                } catch (e: Exception) {
-                    Log.e(ERROR_DATABASE, e.message)
-                    return@async
-                }
+            try {
+                database.clearAllTables()
+            } catch (e: Exception) {
+                Log.e(DATABASE_ERROR, e.message)
             }
         }
     }
 
-    fun getArticle(articleId: Int?): Article {
-        return articleDao.articleByID(articleId)
+    fun insertArticle(article: Article, callback: (art: Article) -> Unit) {
+        launch {
+            try {
+                with(article) {
+                    getArticle(author, title, date) {
+                        if (it == null) {
+                            Article.id += 1
+                            articleId = Article.id
+                            articleDao.insert(article)
+                            callback(article)
+                        } else {
+                            callback(it)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(DATABASE_ERROR, e.message)
+            }
+        }
+    }
+
+    fun getArticleById(articleId: Int, callback: (article: Article?) -> Unit) {
+        launch {
+            try {
+                callback(articleDao.getArticleById(articleId))
+            } catch (e: Exception) {
+                Log.e(DATABASE_ERROR, e.message)
+            }
+        }
+    }
+
+    private fun getArticle(author: String, title: String, date: String, callback: (article: Article?) -> Unit) {
+        launch {
+            try {
+                callback(articleDao.getArticle(author, title, date))
+            } catch (e: Exception) {
+                Log.e(DATABASE_ERROR, e.message)
+            }
+        }
+    }
+
+    fun updateArticle(article: Article, callback: () -> Unit) {
+        launch {
+            try {
+                articleDao.update(article)
+                callback()
+            } catch (e: Exception) {
+                Log.e(DATABASE_ERROR, e.message)
+            }
+        }
     }
 
 }

@@ -8,8 +8,7 @@ import com.example.tacianemartimiano.cklmvvm.R
 import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
-class ArticleAdapter(private val context: Context, private val articleClick: (Article) -> Unit) : RecyclerView.Adapter<ArticleViewHolder>() {
-//class ArticleAdapter(private val context: Context, private val listener: ArticleListener) : RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleAdapter(private val context: Context, private val onArticleClicked: (Article) -> Unit) : RecyclerView.Adapter<ArticleViewHolder>() {
 
     var articlesList = listOf<Article>()
         set(value) {
@@ -24,7 +23,7 @@ class ArticleAdapter(private val context: Context, private val articleClick: (Ar
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(context)
                 .inflate(R.layout.article_list_item, parent, false)
-        return ArticleViewHolder(view, context, articleClick)
+        return ArticleViewHolder(view, context, onArticleClicked)
     }
 
     override fun getItemCount(): Int {

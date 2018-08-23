@@ -21,5 +21,4 @@
     <string name="website">Website</string>
     <string name="contents">Contents: Blablablablablablablablablablablablablablablabla</string>
 
-    <string name="database_error">Error while saving to local database</string>
 </resources>

@@ -1,16 +1,17 @@
-package com.example.tacianemartimiano.cklmvvm.model.dao
+package com.example.tacianemartimiano.cklmvvm.utils.daos
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.example.tacianemartimiano.cklmvvm.models.Article
 
 @Dao
 interface ArticleDao {
 
     @Query("SELECT * FROM articles WHERE article_id = :id")
-    fun articleByID(id: Int?): Article
+    fun getArticleById(id: Int?): Article
+
+    @Query("SELECT * FROM articles WHERE author = :author AND title = :title AND date = :date")
+    fun getArticle(author: String, title: String, date: String): Article
 
     @Query("SELECT * FROM articles")
     fun allArticles(): LiveData<MutableList<Article>>
@@ -18,10 +19,7 @@ interface ArticleDao {
     @Insert
     fun insert(vararg articles: Article)
 
-//    @Update(onConflict = OnConflictStrategy.REPLACE)
-//    fun update(article: Article)
-
-//    @Delete
-//    fun delete(article: Article)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(article: Article)
 
 }
