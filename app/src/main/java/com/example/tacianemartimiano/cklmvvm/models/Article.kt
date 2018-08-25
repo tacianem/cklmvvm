@@ -1,46 +1,39 @@
-package com.example.tacianemartimiano.cklmvvm.models
+package com.example.tacianemartimiano.cklmvvm.model.entities
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
-import com.example.tacianemartimiano.cklmvvm.utils.database.converters.TagConverter
-import com.google.gson.annotations.SerializedName
+import android.arch.persistence.room.*
 
 @Entity(tableName = "articles")
 class Article {
-
-    companion object {
-        var id = -1
-    }
-
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "article_id")
-    var articleId: Int = -1
+    var articleId: Long = 0
 
     var title: String = ""
-
     var website: String = ""
-
-    @SerializedName("authors")
     var author: String = ""
-
     var date: String = ""
-
-    @SerializedName("content")
     var contents: String = ""
-
-    @TypeConverters(TagConverter::class)
-    var tags: ArrayList<Tag> = arrayListOf(Tag(""))
-
+    @Ignore
+    var tags: List<Tag> = listOf()
     @ColumnInfo(name = "image_url")
-    @SerializedName("image_url")
     var imageUrl: String = ""
-
     var read: Boolean = false
 
-    override fun toString(): String { //TODO FAZER UM TO STRING PARA O VIEWHOLDER
+    override fun toString(): String {
         return "\nTitle: $title  \nAuthor: $author"
+    }
+
+    @Entity(tableName = "article_tag",
+            primaryKeys = ["art_id", "art_tag_id"],
+            foreignKeys = [(ForeignKey(entity = Article::class, parentColumns = ["article_id"], childColumns = ["art_id"])),
+                (ForeignKey(entity = Tag::class, parentColumns = ["tag_id"], childColumns = ["art_tag_id"]))])
+
+    abstract class ArticleTag {
+        @ColumnInfo(name = "art_id")
+        var artId: Long = 0
+        @ColumnInfo(name = "art_tag_id")
+        var artTagId: Long = 0
+
     }
 
 }

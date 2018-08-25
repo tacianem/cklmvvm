@@ -1,25 +1,26 @@
-package com.example.tacianemartimiano.cklmvvm.utils.daos
+package com.example.tacianemartimiano.cklmvvm.model.dao
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
-import com.example.tacianemartimiano.cklmvvm.models.Article
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.Query
+import com.example.tacianemartimiano.cklmvvm.model.entities.Article
 
 @Dao
 interface ArticleDao {
 
     @Query("SELECT * FROM articles WHERE article_id = :id")
-    fun getArticleById(id: Int?): Article
-
-    @Query("SELECT * FROM articles WHERE author = :author AND title = :title AND date = :date")
-    fun getArticle(author: String, title: String, date: String): Article
+    fun getArticleByID(id: Long): Article
 
     @Query("SELECT * FROM articles")
-    fun allArticles(): LiveData<MutableList<Article>>
+    fun getAllArticles(): MutableList<Article>
+
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    fun updateArticle(article: Article)
 
     @Insert
-    fun insert(vararg articles: Article)
+    fun insertArticle(vararg articles: Article)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(article: Article)
+//    @Delete
+//    fun deleteArticle(article: Article)
 
 }

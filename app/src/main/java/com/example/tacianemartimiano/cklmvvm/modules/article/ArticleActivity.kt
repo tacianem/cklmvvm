@@ -50,8 +50,8 @@ class ArticleActivity : BaseActivity() {
             progressBar.visibility = View.GONE
 
 
-            emptyListView.setText(R.string.no_connection);
-            articlesListView.setEmptyView(emptyListView);
+//            emptyListView.setText(R.string.no_connection);
+//            articlesListView.setEmptyView(emptyListView);
 
         } else {
             registerObservers()
