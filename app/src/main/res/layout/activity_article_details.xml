@@ -34,7 +34,7 @@
             android:layout_marginStart="100dp"
             android:gravity="end"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/article_title"
+            app:layout_constraintBottom_toTopOf="@+id/articleTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tag"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
 
 
         <TextView
-            android:id="@+id/article_title"
+            android:id="@+id/articleTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -72,11 +72,11 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/article_title"
+            app:layout_constraintTop_toBottomOf="@id/articleTitle"
             tools:text="@string/author" />
 
         <ImageView
-            android:id="@+id/article_image"
+            android:id="@+id/articleImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
@@ -104,7 +104,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/article_image"
+            app:layout_constraintTop_toBottomOf="@id/articleImage"
             tools:text="@string/website" />
 
         <TextView

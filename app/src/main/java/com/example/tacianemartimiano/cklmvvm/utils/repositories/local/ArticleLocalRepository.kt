@@ -9,7 +9,7 @@ import com.example.tacianemartimiano.cklmvvm.utils.daos.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.utils.database.AppDatabase
 import kotlinx.coroutines.experimental.launch
 
-class ArticleRepository(application: Application) {
+class ArticleLocalRepository(application: Application) {
 
     private val database = AppDatabase.getInstance(application)
     private val articleDao: ArticleDao

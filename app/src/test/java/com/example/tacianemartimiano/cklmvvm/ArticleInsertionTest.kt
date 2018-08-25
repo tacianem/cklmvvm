@@ -1,7 +1,7 @@
 package com.example.tacianemartimiano.cklmvvm
 
 import com.example.tacianemartimiano.cklmvvm.models.Article
-import com.example.tacianemartimiano.cklmvvm.utils.repositories.local.ArticleRepository
+import com.example.tacianemartimiano.cklmvvm.utils.repositories.local.ArticleLocalRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -11,7 +11,7 @@ import org.mockito.Mockito.`when` as _when
 class ExampleUnitTest {
 
     lateinit var article: Article
-    lateinit var articleRepository: ArticleRepository
+    lateinit var articleRepository: ArticleLocalRepository
 
     @Before
     fun init() {
