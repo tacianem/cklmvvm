@@ -5,13 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.tacianemartimiano.cklmvvm.R
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
+import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.viewholders.ArticleViewHolder
 
-class ArticleAdapter(val context: Context, val listener: ArticleListener): RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleAdapter(private val context: Context, private val onArticleClicked: (Article) -> Unit) : RecyclerView.Adapter<ArticleViewHolder>() {
 
-    var articlesList = mutableListOf<Article>()
+    var articlesList = listOf<Article>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -24,7 +23,7 @@ class ArticleAdapter(val context: Context, val listener: ArticleListener): Recyc
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val view = LayoutInflater.from(context)
                 .inflate(R.layout.article_list_item, parent, false)
-        return ArticleViewHolder(view, context, listener)
+        return ArticleViewHolder(view, context, onArticleClicked)
     }
 
     override fun getItemCount(): Int {

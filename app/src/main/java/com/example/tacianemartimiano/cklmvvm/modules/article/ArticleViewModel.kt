@@ -1,42 +1,59 @@
 package com.example.tacianemartimiano.cklmvvm.modules.article
 
+import android.app.Activity
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.content.Intent
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.model.repositories.ArticleLocalRepository
-import com.example.tacianemartimiano.cklmvvm.modules.article_details.ArticleDetailsActivity
+import com.example.tacianemartimiano.cklmvvm.models.Article
+import com.example.tacianemartimiano.cklmvvm.modules.articledetails.ArticleDetailsActivity
+import com.example.tacianemartimiano.cklmvvm.modules.articlesorting.ArticleSortingActivity
+import com.example.tacianemartimiano.cklmvvm.utils.apis.retrofit.responses.ArticleResponse
 import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_ARTICLE
-import com.example.tacianemartimiano.cklmvvm.utils.database.AppDatabase
+import com.example.tacianemartimiano.cklmvvm.utils.repositories.api.ArticleApiRepository
+import com.example.tacianemartimiano.cklmvvm.utils.repositories.local.ArticleLocalRepository
 
-class ArticleViewModel(application: Application): AndroidViewModel(application) {
+class ArticleViewModel(application: Application) : AndroidViewModel(application) {
 
-    var articlesListLiveData: LiveData<MutableList<Article>> = MutableLiveData<MutableList<Article>>()
-    private var articlesLocalRep: ArticleLocalRepository
+    var articlesLiveData: MutableLiveData<List<Article>> = MutableLiveData()
+    private var articleLocalRepository: ArticleLocalRepository = ArticleLocalRepository(application)
+    private var articleApiRepository: ArticleApiRepository = ArticleApiRepository()
 
-    init {
-        val database = AppDatabase.getDatabase(application).articleDao()
-        articlesLocalRep = ArticleLocalRepository(database)
+//    fun clearTables() {
+//        articleLocalRepository.clearTables()
+//    }
+
+    fun fetchArticles() {
+        articleApiRepository.fetchApiArticles(object : ArticleResponse {
+            override fun success(articles: List<Article>) {
+                addArticles(articles)
+            }
+        })
+    }
+
+    private fun addArticles(articles: List<Article>) {
+        var updatedArticles = mutableListOf<Article>()
+        articles.forEach { article ->
+            articleLocalRepository.insertArticle(article) {
+                updatedArticles.add(it)
+                articlesLiveData.postValue(updatedArticles) //TODO ESPERAR TODAS TASKS VOLTAREM PRA UPDATAR
+            }
+        }
     }
 
     fun onArticleClicked(context: Context, article: Article) {
         val detailsIntent = Intent(context, ArticleDetailsActivity::class.java)
-        detailsIntent.putExtra(EXTRA_ARTICLE, article?.articleId)
-        context.startActivity(detailsIntent)
+        article.read = true
+        articleLocalRepository.updateArticle(article) {
+            detailsIntent.putExtra(EXTRA_ARTICLE, article.articleId)
+            context.startActivity(detailsIntent)
+        }
     }
 
-    fun fetchArticles() {
-//        ArticlesApiRepositoy.fetchArticles()
-//                ?.subscribeOn(Schedulers.io())
-//                ?.observeOn(AndroidSchedulers.mainThread())
-//                ?.subscribe({
-//                    articlesListLiveData.value = it
-//                }, {
-//
-//                })
+    fun onSortClicked(context: Context) {
+        val sortIntent = Intent(context, ArticleSortingActivity::class.java)
+        (context as Activity).startActivityForResult(sortIntent, 0)
     }
 
 }

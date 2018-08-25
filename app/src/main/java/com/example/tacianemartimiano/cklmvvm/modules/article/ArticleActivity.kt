@@ -1,82 +1,80 @@
-package com.example.tacianemartimiano.cklmvvm
+package com.example.tacianemartimiano.cklmvvm.modules.article
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.model.entities.Tag
-import com.example.tacianemartimiano.cklmvvm.modules.article.ArticleViewModel
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import com.example.tacianemartimiano.cklmvvm.R
 import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
 import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleAdapter
-import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
 import kotlinx.android.synthetic.main.activity_article.*
 
-class ArticleActivity: BaseActivity() {
 
-    private var viewModel: ArticleViewModel? = null
+class ArticleActivity : BaseActivity() {
+
+    private var viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
     private var adapter: ArticleAdapter? = null
-
-    private lateinit var articlesList: MutableList<Article>
-
-    //region Lifecycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
 
-        setupView()
-        fetchArticles()
-        registerObservers()
+        checkInternetConnection()
     }
 
-    //endregion
-
-    //region Private
-
-    private fun setupView() {
-        viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
-
-        adapter = ArticleAdapter(this, object: ArticleListener {
-            override fun onArticleClicked(article: Article) {
-                viewModel?.onArticleClicked(this@ArticleActivity, article)
-            }
-        })
-        articlesRecyclerView.adapter = adapter
-
-        //TODO REMOVE MOCK
-        val tag = Tag()
-        tag.label = "CKL"
-
-        val article = Article()
-        article.title = "title"
-        article.author = "author"
-        article.date = "date"
-        article.contents = "contents"
-        article.website = "website"
-        article.tags = listOf(tag)
-        article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
-
-        articlesList = mutableListOf(article, article, article, article, article, article, article, article, article, article)
-        adapter?.articlesList = articlesList
-
-        val layoutManager = LinearLayoutManager(this)
-        articlesRecyclerView.layoutManager = layoutManager
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.dot_menu, menu)
+        return true
     }
 
-    private fun fetchArticles() {
-        viewModel?.fetchArticles()
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        //Note: marking the menu item as showAsAction = always shows it directly on the actionBar
+        val id = item?.itemId
+        when (id) {
+            R.id.sort -> viewModel.onSortClicked(this)
+        }
+        return true
+    }
+
+    private fun checkInternetConnection() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && !networkInfo.isConnected) {//no internet
+            Snackbar.make(frameLayout, "No internet connection!", Snackbar.LENGTH_INDEFINITE).show()
+            progressBar.visibility = View.GONE
+
+
+//            emptyListView.setText(R.string.no_connection);
+//            articlesListView.setEmptyView(emptyListView);
+
+        } else {
+            registerObservers()
+            setupView()
+        }
     }
 
     private fun registerObservers() {
-        viewModel?.articlesListLiveData?.observe(this, Observer { articles ->
+        viewModel.articlesLiveData.observe(this, Observer { articles ->
             articles?.let {
                 adapter?.articlesList = it
-                adapter?.notifyDataSetChanged()
             }
         })
     }
 
-    //endregion
+    private fun setupView() {
+        adapter = ArticleAdapter(this) { viewModel.onArticleClicked(this, it) }
+
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = adapter
+
+        viewModel.fetchArticles()
+    }
 
 }
