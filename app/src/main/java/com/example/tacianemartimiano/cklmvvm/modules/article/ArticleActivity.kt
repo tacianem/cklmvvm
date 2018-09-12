@@ -1,65 +1,123 @@
-package com.example.tacianemartimiano.cklmvvm
+package com.example.tacianemartimiano.cklmvvm.modules.article
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
-import com.example.tacianemartimiano.cklmvvm.model.entities.Article
-import com.example.tacianemartimiano.cklmvvm.modules.article.ArticleViewModel
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import com.example.tacianemartimiano.cklmvvm.R
 import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
-import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleRecycleAdapter
-import com.example.tacianemartimiano.cklmvvm.utils.listeners.ArticleListener
+import com.example.tacianemartimiano.cklmvvm.utils.adapters.ArticleAdapter
+import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_READ
+import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_SORT
+import com.example.tacianemartimiano.cklmvvm.utils.constants.EXTRA_UNREAD
 import kotlinx.android.synthetic.main.activity_article.*
 
 
-class ArticleActivity: BaseActivity(), ArticleListener {
+class ArticleActivity : BaseActivity() {
 
-    private var adapter: ArticleRecycleAdapter? = null
     private var viewModel: ArticleViewModel? = null
-    private var articles: List<Article> = listOf()
+    private var adapter: ArticleAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
-
-        setupView()
-        registerObservers()
-    }
-
-    private fun setupView() {
         viewModel = ViewModelProviders.of(this).get(ArticleViewModel::class.java)
-        adapter = ArticleRecycleAdapter(this, this)
-        articlesRecyclerView.adapter = adapter
 
-//        val tag = Tag()
-//        tag.label = "CKL"
-//
-//        val article = Article()
-//        article.title = "title"
-//        article.author = "author"
-//        article.date = "date"
-//        article.contents = "contents"
-//        article.website = "website"
-//        article.tags = listOf(tag)
-//        article.imageUrl = "http://www.ultimaficha.com.br/wp-content/uploads/2018/04/detetive-pikachu.jpg"
-//
-//        articles = listOf(article, article, article, article, article, article, article, article, article, article)
-//        adapter?.articlesList = articles
-
-
-        val layoutManager = LinearLayoutManager(this)
-        articlesRecyclerView.layoutManager = layoutManager
+        swipeRefresh.setOnRefreshListener {
+            viewModel?.fetchArticles()
+            swipeRefresh.isRefreshing = false
         }
 
-    override fun onArticleClicked(article: Article?) {
-        viewModel?.onArticleClicked(this, article)
+//        swipeRefresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+//            override fun onRefresh() {
+//                viewModel?.fetchArticles()
+//            }
+//        })
+
+        checkInternetConnection()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.dot_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        //Note: marking the menu item as showAsAction = always shows it directly on the actionBar
+        val id = item?.itemId
+        when (id) {
+            R.id.sort -> viewModel?.onSortClicked(this)
+        }
+        return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                val option = data?.getStringExtra(EXTRA_SORT)
+                val read = data?.getBooleanExtra(EXTRA_READ, true)
+                val unread = data?.getBooleanExtra(EXTRA_UNREAD, true)
+                viewModel?.sort(option, read, unread)
+            }
+        }
+    }
+
+    private fun checkInternetConnection() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) {
+            registerObservers()
+            setupView()
+        } else {
+            showSnackbar()
+            loadingBar.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+
+        }
+    }
+
+    private fun showSnackbar() {
+        val snackbar = Snackbar.make(coordinatorLayout, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(Color.MAGENTA)
+        snackbar.setAction("TRY AGAIN") {
+            checkInternetConnection()
+        }
+        snackbar.show()
     }
 
     private fun registerObservers() {
-        viewModel?.articles?.observe(this, Observer {
-            adapter?.articlesList = articles
-            adapter?.notifyDataSetChanged()
+        viewModel?.articlesLiveData?.observe(this, Observer { articles ->
+            if (articles?.isEmpty() == true) {
+                loadingBar.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+                emptyView.visibility = View.VISIBLE
+
+            } else {
+                emptyView.visibility = View.GONE
+                loadingBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                articles?.let {
+                    adapter?.articlesList = it
+                }
+            }
         })
+    }
+
+    private fun setupView() {
+        adapter = ArticleAdapter(this) { viewModel?.onArticleClicked(this, it) }
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = adapter
+
+        viewModel?.fetchArticles()
     }
 
 }
