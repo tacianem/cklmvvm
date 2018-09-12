@@ -9,14 +9,14 @@ import com.example.tacianemartimiano.cklmvvm.modules.base.BaseActivity
 import com.example.tacianemartimiano.cklmvvm.utils.glide.GlideApp
 import kotlinx.android.synthetic.main.activity_article_details.*
 
-
 class ArticleDetailsActivity : BaseActivity() {
 
-    private var viewModel = ViewModelProviders.of(this).get(ArticleDetailsViewModel::class.java)
+    private var viewModel: ArticleDetailsViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_details)
+        viewModel = ViewModelProviders.of(this).get(ArticleDetailsViewModel::class.java)
 
         registerObservers()
         setupView()
@@ -24,11 +24,11 @@ class ArticleDetailsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        viewModel.onBackPressed(this)
+        viewModel?.onBackPressed(this)
     }
 
     private fun registerObservers() {
-        viewModel.articleLiveData.observe(this, Observer { article ->
+        viewModel?.articleLiveData?.observe(this, Observer { article ->
             article?.let {
                 articleTitle.text = article.title
                 author.text = article.author
@@ -54,7 +54,7 @@ class ArticleDetailsActivity : BaseActivity() {
 
     private fun setupView() {
         showBackButton()
-        viewModel.initWithExtras(intent.extras)
+        viewModel?.initWithExtras(intent.extras)
     }
 
 }

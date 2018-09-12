@@ -3,9 +3,9 @@ package com.example.tacianemartimiano.cklmvvm.utils.repositories.local
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.util.Log
+import com.example.tacianemartimiano.cklmvvm.model.dao.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.models.Article
 import com.example.tacianemartimiano.cklmvvm.utils.constants.DATABASE_ERROR
-import com.example.tacianemartimiano.cklmvvm.utils.daos.ArticleDao
 import com.example.tacianemartimiano.cklmvvm.utils.database.AppDatabase
 import kotlinx.coroutines.experimental.launch
 

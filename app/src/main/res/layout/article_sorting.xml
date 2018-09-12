@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -92,43 +91,58 @@
             android:text="@string/sort_tag"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/sortRead"
+            app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sortWebsite" />
 
-        <CheckBox
-            android:id="@+id/sortRead"
+        <View
+            android:id="@+id/view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="4dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:checked="true"
-            android:gravity="center"
-            android:text="@string/sort_read"
-            app:layout_constraintBottom_toTopOf="sortUnread"
+            android:background="@color/extra"
+            app:layout_constraintBottom_toTopOf="@+id/sortReadCheckbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sortTag" />
 
         <CheckBox
-            android:id="@+id/sortUnread"
-            android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_marginBottom="8dp"
+            android:id="@+id/sortReadCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/sort_read"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/sortUnreadCheckbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <CheckBox
+            android:id="@+id/sortUnreadCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:checked="true"
             android:gravity="center"
             android:text="@string/sort_unread"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sortRead" />
+            app:layout_constraintTop_toBottomOf="@+id/sortReadCheckbox" />
 
 
     </android.support.constraint.ConstraintLayout>

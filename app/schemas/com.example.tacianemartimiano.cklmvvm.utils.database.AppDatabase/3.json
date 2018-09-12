@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e46aa0898ea0179125ecda9676078833",
+    "identityHash": "a24071d970b26c2c39b2a06005f802c8",
     "entities": [
       {
         "tableName": "articles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`article_id` INTEGER NOT NULL, `title` TEXT NOT NULL, `website` TEXT NOT NULL, `author` TEXT NOT NULL, `date` TEXT NOT NULL, `contents` TEXT NOT NULL, `tags` TEXT NOT NULL, `image_url` TEXT NOT NULL, `read` INTEGER NOT NULL, PRIMARY KEY(`article_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`article_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `website` TEXT NOT NULL, `author` TEXT NOT NULL, `date` TEXT NOT NULL, `contents` TEXT NOT NULL, `tags` TEXT NOT NULL, `image_url` TEXT NOT NULL, `read` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "articleId",
@@ -67,7 +67,7 @@
           "columnNames": [
             "article_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -75,7 +75,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e46aa0898ea0179125ecda9676078833\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a24071d970b26c2c39b2a06005f802c8\")"
     ]
   }
 }
